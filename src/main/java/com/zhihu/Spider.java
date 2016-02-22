@@ -24,7 +24,7 @@ class Constants {
 }
 
 /**
- * 工作任务
+ * 生成问题ID,以2开头的所有问题
  * 
  * @author zhenggm<a href="mailto:zhenggm@chsi.com.cn">zhenggm</a>
  * @version $Id$
@@ -129,6 +129,7 @@ class Consumer implements Runnable {
                 sb.append(link.html().replaceAll("data-actualsrc", "src"));
                 sb.append("-----------------------------------------<br/>");
             }
+            // 写入文件
             // FileWriter.write(sb.toString());
             System.out.println(sb.toString());
         } catch (Exception e) {
