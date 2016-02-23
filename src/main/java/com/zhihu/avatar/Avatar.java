@@ -13,6 +13,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.zhihu.FileWriter;
+
 /**
  * 公共常量
  * 
@@ -123,19 +125,24 @@ class Consumer implements Runnable {
                     .timeout(2000).get();
             Elements elems = dom.select(".Avatar").select("img");
             for (Element element : elems) {
-                User user = new User();
-                user.setLoginId(element.parent().attr("href"));
-                user.setImgUrl(element.attr("src"));
-                user.setName(element.parent().nextElementSibling().text());
-                userList.add(user);
+                // 去掉匿名用户
+                if (!"javascript:void(0);".equals(element.parent().attr("href"))) {
+                    User user = new User();
+                    user.setLoginId(element.parent().attr("href"));
+                    // 默认抓取的小图_s.jpg结尾，改大图修改为_xl.jpg
+                    user.setImgUrl(element.attr("src"));
+                    user.setName(element.parent().nextElementSibling().text());
+                    userList.add(user);
+                    FileWriter.writeAvatar(user);
+                }
             }
         } catch (Exception e) {
         }
-        for (User user : userList) {
-            System.out.println(user.getName());
-            System.out.println(user.getLoginId());
-            System.out.println(user.getImgUrl());
-        }
+        // for (User user : userList) {
+        // System.out.println(user.getName());
+        // System.out.println(user.getLoginId());
+        // System.out.println(user.getImgUrl());
+        // }
 
     }
 }
