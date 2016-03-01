@@ -130,9 +130,10 @@ class Consumer implements Runnable {
                     User user = new User();
                     user.setLoginId(element.parent().attr("href"));
                     // 默认抓取的小图_s.jpg结尾，改大图修改为_xl.jpg
-                    user.setImgUrl(element.attr("src"));
+                    user.setImgUrl(element.attr("src").replace("_s.jpg", "_xl.jpg"));
                     user.setName(element.parent().nextElementSibling().text());
                     userList.add(user);
+                    System.out.println("用户:" + user.getName());
                     FileWriter.writeAvatar(user);
                 }
             }
