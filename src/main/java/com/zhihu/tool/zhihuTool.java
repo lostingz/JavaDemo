@@ -5,8 +5,17 @@
 package com.zhihu.tool;
 
 import java.io.IOException;
+import java.security.SecureRandom;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -16,6 +25,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
@@ -64,5 +74,41 @@ public class zhihuTool {
         JSONObject json = JSON.parseObject(responseJsonStr);
         System.out.println(json.toJSONString());
         return json.getString("r").equals("0");
+    }
+
+    public static HttpClient getHttpsClient() {
+        HttpClient httpClient = null;
+        SSLContext context;
+        try {
+            context = SSLContext.getInstance("SSL");
+            context.init(null, new TrustManager[] {new X509TrustManager() {
+                @Override
+                public void checkClientTrusted(X509Certificate[] paramArrayOfX509Certificate, String paramString)
+                        throws CertificateException {
+                }
+
+                @Override
+                public void checkServerTrusted(X509Certificate[] paramArrayOfX509Certificate, String paramString)
+                        throws CertificateException {
+                }
+
+                @Override
+                public X509Certificate[] getAcceptedIssuers() {
+                    return null;
+                }
+
+            }}, new SecureRandom());
+
+            HostnameVerifier verifier = new HostnameVerifier() {
+                public boolean verify(String hostname, SSLSession session) {
+                    return true;
+                }
+            };
+            SSLConnectionSocketFactory sslConnectionSocketFactory = new SSLConnectionSocketFactory(context, verifier);
+            httpClient = HttpClients.custom().setSSLSocketFactory(sslConnectionSocketFactory).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return httpClient;
     }
 }

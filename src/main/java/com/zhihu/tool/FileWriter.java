@@ -2,14 +2,20 @@
  * Chsi
  * Created on 2016年1月8日
  */
-package com.zhihu;
+package com.zhihu.tool;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 
 import com.zhihu.avatar.User;
 
@@ -29,6 +35,32 @@ public class FileWriter {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void writeToDisk(User user, HttpClient httpClient) {
+        try {
+            String fileName = user.getName() + ".jpg";
+            HttpGet request = new HttpGet(user.getImgUrl());
+            HttpResponse response = httpClient.execute(request);
+            if (response.getStatusLine().getStatusCode() == 200) {
+                InputStream in = response.getEntity().getContent();
+                byte[] b = new byte[1024];
+                int len = 0;
+                File f = new File("E:/testImage/zhihu/" + fileName);
+                if (!f.exists()) {
+                    f.createNewFile();
+                }
+                OutputStream out = new FileOutputStream(f);
+                while ((len = in.read(b)) != -1) {
+                    out.write(b, 0, len);
+                }
+                System.out.println(user.getName() + "get image success");
+                out.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("conn error");
         }
     }
 

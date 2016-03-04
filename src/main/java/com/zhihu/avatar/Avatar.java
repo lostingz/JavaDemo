@@ -8,12 +8,14 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import org.apache.http.client.HttpClient;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.zhihu.FileWriter;
+import com.zhihu.tool.FileWriter;
+import com.zhihu.tool.zhihuTool;
 
 /**
  * 公共常量
@@ -25,6 +27,7 @@ class Constants {
     public static final int MAX_BUFFER_SIZE = 100;
     public static final int NUM_OF_PRODUCER = 8;
     public static final int NUM_OF_CONSUMER = 10;
+    public static final HttpClient HTTPCLIENT = zhihuTool.getHttpsClient();
 }
 
 /**
@@ -134,17 +137,11 @@ class Consumer implements Runnable {
                     user.setName(element.parent().nextElementSibling().text());
                     userList.add(user);
                     System.out.println("用户:" + user.getName());
-                    FileWriter.writeAvatar(user);
+                    FileWriter.writeToDisk(user, Constants.HTTPCLIENT);
                 }
             }
         } catch (Exception e) {
         }
-        // for (User user : userList) {
-        // System.out.println(user.getName());
-        // System.out.println(user.getLoginId());
-        // System.out.println(user.getImgUrl());
-        // }
-
     }
 }
 
