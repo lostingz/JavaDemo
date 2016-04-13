@@ -9,6 +9,7 @@ package com.zhihu.config;
  * @version $Id$
  */
 public class UserInfoConfig {
-    public static final String EMAIL = "jianguo.bai@hirebigdata.cn";
-    public static final String PASSWD = "wsc111111";
+    // 输入自己的账号
+    public static final String EMAIL = "";
+    public static final String PASSWD = "";
 }
