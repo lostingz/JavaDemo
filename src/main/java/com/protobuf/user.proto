@@ -1,0 +1,10 @@
+package com.protobuf.model;
+option java_package="com.protobuf.model";
+option java_outer_classname="UserProtos";
+message User{
+    required string name=1;
+    required string password=2;
+    required string birth=3;
+    optional string email = 4;
+    optional int64 phone=5;
+}

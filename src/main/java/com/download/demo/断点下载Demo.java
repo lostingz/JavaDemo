@@ -29,7 +29,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class 断点下载Demo {
-    public static String path = "http://softdownload.hao123.com/hao123-soft-online-bcs/soft/Y/2013-07-18_YoudaoDict_baidu.alading.exe";// "http://softdownload.hao123.com/hao123-soft-online-bcs/soft/Y/2013-07-18_YoudaoDict_baidu.alading.exe";
+    // public static String path =
+    // "http://softdownload.hao123.com/hao123-soft-online-bcs/soft/Y/2013-07-18_YoudaoDict_baidu.alading.exe";//
+    // "http://softdownload.hao123.com/hao123-soft-online-bcs/soft/Y/2013-07-18_YoudaoDict_baidu.alading.exe";
+    public static String path = "http://120.52.72.36/www.oracle.com/c3pr90ntcsf0/technetwork/server-storage/solaris11/documentation/buildcloudenv-s11-rad-rest-hol-2860069.pdf";
     public static int threadCount = 10;
     public static int runningThread = 10;
 
@@ -123,7 +126,7 @@ public class 断点下载Demo {
                 int code = conn.getResponseCode();
                 System.out.println("code:" + code);
                 InputStream is = conn.getInputStream();// 已经设置了请求的位置，返回的是当前位置对应的文件的输入流
-                RandomAccessFile raf = new RandomAccessFile("setup.exe", "rwd");
+                RandomAccessFile raf = new RandomAccessFile("test.pdf", "rwd");
                 // 随机写文件的时候从哪个位置开始写
                 raf.seek(startIndex);// 定位文件
 

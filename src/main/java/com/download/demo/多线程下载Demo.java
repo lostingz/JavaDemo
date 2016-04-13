@@ -21,9 +21,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class 多线程下载Demo {
-    
-    //public static String path = "http://static.csdn.net/public/common/toolbar/css/index.css";
-    public static String path = "http://mirrors.neusoft.edu.cn/eclipse/technology/epp/downloads/release/mars/1/eclipse-jee-mars-1-win32-x86_64.zip";
+
+    // public static String path =
+    //
+    // public static String path =
+    // "http://mirrors.neusoft.edu.cn/eclipse/technology/epp/downloads/release/mars/1/eclipse-jee-mars-1-win32-x86_64.zip";
+    public static String path = "http://static.csdn.net/public/common/toolbar/css/index.css";
     public static int threadCount = 30;
     public static long startTime;
 
@@ -105,7 +108,7 @@ public class 多线程下载Demo {
                 int code = conn.getResponseCode();
                 System.out.println("code:" + code);
                 InputStream is = conn.getInputStream();// 已经设置了请求的位置，返回的是当前位置对应的文件的输入流
-                RandomAccessFile raf = new RandomAccessFile("index.css", "rwd");
+                RandomAccessFile raf = new RandomAccessFile("index.text", "rwd");
                 // 随机写文件的时候从哪个位置开始写
                 raf.seek(startIndex);// 定位文件
 

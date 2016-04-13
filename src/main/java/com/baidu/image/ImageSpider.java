@@ -26,9 +26,9 @@ import com.zhihu.tool.zhihuTool;
  */
 public class ImageSpider {
     public static void main(String[] args) {
-        String keyword = "sun";
+        String keyword = "task";
         String pageNum = "1";
-        String returnNum = "100";
+        String returnNum = "600";
         String url = URLUtil.getQueryUrl(keyword, pageNum, returnNum);
         HttpClient httpClient = HttpClients.createDefault();
         if (URLUtil.isHttps(url)) {
