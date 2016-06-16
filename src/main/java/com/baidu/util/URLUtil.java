@@ -4,6 +4,20 @@
  */
 package com.baidu.util;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClients;
+
 import com.baidu.config.BaiduConstants;
 
 /**
@@ -45,5 +59,33 @@ public class URLUtil {
 
     public static boolean isHttps(String url){
         return url.substring(0, 5).equals("https");
+    }
+
+    public static void downloadImgByUrl(String url) {
+        HttpClient httpClient = HttpClients.createMinimal();
+        RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(1000).setConnectTimeout(1000).build();// 设置请求和传输超时时间
+        HttpGet request = new HttpGet(url);
+        request.setConfig(requestConfig);
+        HttpResponse response;
+        try {
+            response = httpClient.execute(request);
+            HttpEntity entity = response.getEntity();
+            InputStream in = entity.getContent();
+            byte[] b = new byte[1024];
+            int len = 0;
+            File folder = new File(BaiduConstants.IMG_PATH);
+            if (!folder.exists()) {
+                folder.mkdirs();
+            }
+            OutputStream out = new FileOutputStream(BaiduConstants.IMG_PATH + System.currentTimeMillis() + ".jpg");
+            while ((len = in.read(b)) != -1) {
+                out.write(b, 0, len);
+            }
+            out.close();
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
