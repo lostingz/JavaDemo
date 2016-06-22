@@ -29,7 +29,7 @@ import com.alibaba.fastjson.JSONObject;
  */
 public class DownloadImg {
     public static void main(String[] args) {
-        String url = "http://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1";
+        String url = "http://cn.bing.com/HPImageArchive.aspx?format=js&idx=3&n=1";
         HttpClient client = HttpClients.createDefault();
         HttpGet get = new HttpGet(url);
         try {

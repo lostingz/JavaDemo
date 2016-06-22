@@ -113,7 +113,7 @@ class Consumer implements Runnable {
 
     }
 
-    private synchronized void getContent(String id) {
+    private void getContent(String id) {
         String url = "http://www.zhihu.com/question/" + id;
         try {
             Document dom = Jsoup.connect(url).userAgent("Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)")
@@ -124,16 +124,18 @@ class Consumer implements Runnable {
             sb.append("<h4>" + title + "</h4>");
             Elements answers = dom.select(".zm-editable-content");
             int length = answers.size();
-            for (int i = 1; i < length; i++) {
-                Element link = answers.get(i);
-                sb.append(link.html().replaceAll("data-actualsrc", "src"));
-                sb.append("-----------------------------------------<br/>");
+            if (length > 0) {
+                for (int i = 1; i < length; i++) {
+                    Element link = answers.get(i);
+                    sb.append(link.html().replaceAll("data-actualsrc", "src"));
+                    sb.append("-----------------------------------------<br/>");
+                }
+                // 写入文件
+                // FileWriter.write(sb.toString());
+                System.out.println(sb.toString());
             }
-            // 写入文件
-            // FileWriter.write(sb.toString());
-            System.out.println(sb.toString());
         } catch (Exception e) {
-
+            System.out.println("no  this question Id");
         }
     }
 }
