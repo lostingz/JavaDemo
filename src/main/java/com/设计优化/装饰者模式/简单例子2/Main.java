@@ -12,5 +12,7 @@ public class Main {
         System.out.println(lettuce.getName() + "  价钱：" + lettuce.getPrice());
         Chilli c = new Chilli(hamburger);
         System.out.println(c.getName() + "  价钱：" + c.getPrice());
+        Lettuce d = new Lettuce(new Chilli(hamburger));
+        System.out.println(d.getName() + "  价钱：" + d.getPrice());
     }
 }
