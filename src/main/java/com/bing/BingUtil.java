@@ -27,8 +27,8 @@ import com.alibaba.fastjson.JSONObject;
  * @author zhenggm<a href="mailto:zhenggm@chsi.com.cn">zhenggm</a>
  * @version $Id$
  */
-public class DownloadImg {
-    public static void main(String[] args) {
+public class BingUtil {
+    public static void downloadImg(String path) {
         String url = "http://cn.bing.com/HPImageArchive.aspx?format=js&idx=3&n=1";
         HttpClient client = HttpClients.createDefault();
         HttpGet get = new HttpGet(url);
@@ -43,7 +43,6 @@ public class DownloadImg {
                 InputStream in = resp.getEntity().getContent();
                 byte[] b = new byte[1024];
                 int len = 0;
-                String path = "E:/testImage/bing/";
                 File folder = new File(path);
                 if (!folder.exists()) {
                     folder.mkdirs();
@@ -65,5 +64,10 @@ public class DownloadImg {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
+        String path = "E:/testImage/bing/";
+        downloadImg(path);
     }
 }
