@@ -53,7 +53,11 @@ public class HtmlTool {
     }
 
     public static Document getDocument(String url) throws IOException {
-        return Jsoup.connect(url).userAgent(getRandomUserAgent()).timeout(4000).get();
+        return Jsoup.connect(url).userAgent(getRandomUserAgent()).timeout(10000).get();
+    }
+
+    public static Document getDocumentKeepAlive(String url) throws IOException {
+        return Jsoup.connect(url).userAgent(getRandomUserAgent()).header("Connection","keep-alive").timeout(30000).get();
     }
 
     public static HttpClient getHttpsClient() {
@@ -113,7 +117,7 @@ public class HtmlTool {
         return null;
     }
 
-    public static void downloadImgFromUrl(String url, String title, String dirPath, String fileName, int timeout)
+    public static File downloadImgFromUrl(String url, String title, String dirPath, String fileName, int timeout)
             throws ClientProtocolException, IOException {
         InputStream in = getInputStreamByUrl(url, timeout);
         byte[] b = new byte[1024];
@@ -132,6 +136,7 @@ public class HtmlTool {
         }
         out.close();
         System.out.println("Download " + title + " finished");
+        return f;
     }
 
     public static JSONObject jsonResponse(HttpRequestBase req, HttpClient httpClient) throws ClientProtocolException,
