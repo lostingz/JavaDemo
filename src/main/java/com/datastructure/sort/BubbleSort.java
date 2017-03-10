@@ -4,6 +4,8 @@
  */
 package com.datastructure.sort;
 
+import java.util.Arrays;
+
 /**
  * @author zhenggm<a href="mailto:zhenggm@chsi.com.cn">zhenggm</a>
  * @version $Id$
@@ -26,13 +28,7 @@ public class BubbleSort {
 
     public static void main(String[] args) {
         int[] arr = new int[] {1, 5, 3, 2, 7, 0, 2, 9};
-        for (int i : arr) {
-            System.out.print(i + " ");
-        }
-        System.out.println();
         sort(arr);
-        for (int i : arr) {
-            System.out.print(i + " ");
-        }
+        System.out.println(Arrays.toString(arr));
     }
 }
